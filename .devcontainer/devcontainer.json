@@ -1,0 +1,21 @@
+{
+  "name": "Collectionneur",
+  "dockerComposeFile": ["docker-compose.dev.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "Prisma.prisma"]
+    }
+  },
+  "overrideCommand": true,
+  "postCreateCommand": "npm install && npm run db:generate",
+  "postAttachCommand": "npm run db:reset && npm run dev"
+}
