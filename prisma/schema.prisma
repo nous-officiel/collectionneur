@@ -6,10 +6,34 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  pseudo    String   @unique
+  sub       String   @unique
+  captures   Capture[]
+}
+
+model Collectible {
+  id          Int      @id @default(autoincrement())
+  name        String
+  captures    Capture[]
+}
+
+model Capture {
+  photo     Bytes
+  latitude  Float
+  longitude Float
+  createdAt DateTime  @default(now())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  collectibleId Int
+  collectible   Collectible @relation(fields: [collectibleId], references: [id])
+  @@id([userId, collectibleId])
 }
