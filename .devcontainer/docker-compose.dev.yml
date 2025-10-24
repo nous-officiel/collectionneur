@@ -33,6 +33,8 @@ services:
     image: quay.io/oauth2-proxy/oauth2-proxy:latest
     ports:
       - "8000:4180"
+    env_file:
+      - ../.env
     environment:
       OAUTH2_PROXY_PROVIDER: google
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: azure gp
